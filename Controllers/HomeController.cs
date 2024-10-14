@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using InventoryManagement.Context;
 using InventoryManagement.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace InventoryManagement.Controllers
@@ -42,21 +42,38 @@ namespace InventoryManagement.Controllers
 
             var data = _context.product.Add(model);
             _context.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
 
 
-        //public async Task<IEnumerable<product>> GetProduct()
-        //{
-        //    var product = await _context.product.ToListAsync();
-        //    return product;
-        //}
+        public async Task<IEnumerable<product>> GetProduct()
+        {
+            var product = await _context.product.ToListAsync();
+            return product;
+        }
 
-        //public async Task<dynamic> Edit(int ID)
-        //{
-        //    var product = await _context.product.FirstOrDefaultAsync(x => x.id == ID);
-        //    return product;
-        //}
+        public async Task<dynamic> Edit(int ID)
+        { 
+            var product = await _context.product.FirstOrDefaultAsync(x => x.id == ID);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Update(product model)
+        {
+
+            var data = _context.product.Update(model);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int ID)
+        {
+            var product =  _context.product.Where(x => x.id == ID).FirstOrDefault();
+                           _context.product.Remove(product);
+                           _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         //public dynamic Update(product product)
         //{

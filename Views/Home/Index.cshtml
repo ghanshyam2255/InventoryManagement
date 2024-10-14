@@ -1,43 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<product>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-
-@model List<product>
-
-    <table>
+<h2>Product List</h2>
+<table class="table">
     <thead>
         <tr>
             <th>id</th>
+            <th>name</th>
             <th>price</th>
             <th>quantity</th>
-            <th>name</th>
-
+            <th>Actions</th>
         </tr>
     </thead>
-
-    @foreach (var data in Model)
-    {
-
+    <tbody>
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@data.id</td>
+                <td>@item.id</td>
+                <td>@item.name</td>
+                <td>@item.price</td>
+                <td>@item.quantity</td>
+                <td>
+@*                     <a href="@Url.Action("Edit","Home", new {ID = item.id})"> Edit </a>         |
+                    
+                    <a href="@Url.Action("Delete","Home", new {ID = item.id})"> Delete </a> *@
 
-                <td>@data.price</td>
-                <td>@data.quantity</td>
-                <td>@data.name</td>
 
 
+                    <a href="@Url.Action("Edit","Home", new {ID = item.id})" class="btn btn-primary">Edit</a> |
+
+                    <a href="@Url.Action("Delete","Home", new {ID = item.id})" class="btn btn-danger">Delete</a>
+
+                 </td>
             </tr>
-
         }
-    }
+    </tbody>
 </table>
-
-
-    
